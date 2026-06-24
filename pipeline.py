@@ -1826,7 +1826,11 @@ def run_phase7(p1: dict, p2: dict, p3: dict, p4_5: dict, p6: dict,
     if scores_ok and viewdict:
         t_conviction_map = p3_5.get("ticker_conviction", {})
         view_tickers_list = list(viewdict.keys())
-        ticker_conviction = {t: t_conviction_map.get(t, 0.50) for t in view_tickers_list}
+        # ticker_conviction = {t: t_conviction_map.get(t, 0.50) for t in view_tickers_list}
+        ticker_conviction = {}
+        for t in view_tickers_list:
+            raw = t_conviction_map.get(t, 0.50)
+            ticker_conviction[t] = float(raw) if pd.notna(raw) else 0.50
 
         try:
             # Diagonal of tau*S for viewed assets → base per-view uncertainty
@@ -1910,7 +1914,9 @@ def run_phase7(p1: dict, p2: dict, p3: dict, p4_5: dict, p6: dict,
         "prior_return": round(float(pi[t]) if hasattr(pi,"__getitem__") else float(pi), 4),
         "conviction": round(ticker_conviction.get(t, np.nan), 3),
     } for t, v in viewdict.items()]).to_csv(OUTPUT_DIR / "bl_diagnostics.csv", index=False)
-
+    ret_bl.to_pickle(OUTPUT_DIR / "bl_posterior_returns.pkl")
+    S_bl.to_pickle(OUTPUT_DIR / "bl_posterior_cov.pkl")
+    
     logger.info("Phase 7 ✓\n")
     return {
         "weights_clean": weights_clean, "allocation": allocation,
@@ -3384,7 +3390,7 @@ def run_phase9(
 
 
 # %%
-# ======================================================================
+    # ======================================================================
 # MAIN
 # ======================================================================
 def main() -> None:
@@ -3410,9 +3416,9 @@ def main() -> None:
     logger.info("=" * 70)
     logger.info("Dashboard → http://127.0.0.1:8050/")
     app.run(debug=False, host="0.0.0.0", port=8050)
-# import os
+import os
 # Windows alternative
-# os.system("for /f \"tokens=5\" %a in ('netstat -aon ^| find \":8050\"') do taskkill /f /pid %a")
+os.system("for /f \"tokens=5\" %a in ('netstat -aon ^| find \":8050\"') do taskkill /f /pid %a")
 if __name__ == "__main__":
     main()
 
