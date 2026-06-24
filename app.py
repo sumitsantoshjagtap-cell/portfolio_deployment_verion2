@@ -95,6 +95,15 @@ perf_summary = perf_summary_df.iloc[0].to_dict() if not perf_summary_df.empty el
 eval_df = pd.read_csv(OUTPUT_DIR / "model_evaluation.csv")
 eval_preds_df = pd.read_csv(OUTPUT_DIR / "model_eval_predictions.csv")
 
+# Load Black‑Litterman posterior (for custom weights explorer)
+bl_returns_path = OUTPUT_DIR / "bl_posterior_returns.pkl"
+bl_cov_path = OUTPUT_DIR / "bl_posterior_cov.pkl"
+ret_bl = None
+S_bl   = None
+if bl_returns_path.exists() and bl_cov_path.exists():
+    ret_bl = pd.read_pickle(bl_returns_path)
+    S_bl   = pd.read_pickle(bl_cov_path)
+
 # Sector scores (optional)
 sector_composite_scores = pd.DataFrame()
 sector_conviction = {}
@@ -171,8 +180,8 @@ p7 = {
     "latest_prices": pd.Series(dtype=float),
     "stress_prob": 0.0,
     "in_stress": False,
-    "ret_bl": None,
-    "S_bl": None,
+    "ret_bl": ret_bl,
+    "S_bl": S_bl,
     "ticker_conviction": ticker_conviction,
 }
 
