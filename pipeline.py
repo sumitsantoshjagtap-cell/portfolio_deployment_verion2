@@ -3418,7 +3418,7 @@ def main() -> None:
     app.run(debug=False, host="0.0.0.0", port=8050)
 import os
 # Windows alternative
-os.system("for /f \"tokens=5\" %a in ('netstat -aon ^| find \":8050\"') do taskkill /f /pid %a")
+# os.system("for /f \"tokens=5\" %a in ('netstat -aon ^| find \":8050\"') do taskkill /f /pid %a")
 if __name__ == "__main__":
     main()
 
