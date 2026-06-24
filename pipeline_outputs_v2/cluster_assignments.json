@@ -1,0 +1,33 @@
+{
+  "isolated": [
+    "ABREL.NS"
+  ],
+  "VARX_group_1": [
+    "HDFCBANK.NS",
+    "INDIGO.NS",
+    "MARATHON.NS",
+    "BIOCON.NS"
+  ],
+  "VARX_group_2": [
+    "BHARTIARTL.NS",
+    "SURYAROSNI.NS",
+    "SUDARSCHEM.NS",
+    "LTTS.NS",
+    "KPRMILL.NS"
+  ],
+  "VARX_group_3": [
+    "APOLLOHOSP.NS",
+    "EIDPARRY.NS",
+    "CAMLINFINE.NS",
+    "ASTERDM.NS",
+    "AEGISLOG.NS"
+  ],
+  "VARX_group_4": [
+    "JSWENERGY.NS",
+    "GREENLAM.NS"
+  ],
+  "VARX_group_5": [
+    "BANDHANBNK.NS",
+    "BSE.NS"
+  ]
+}
